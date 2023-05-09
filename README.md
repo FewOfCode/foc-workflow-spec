@@ -4,13 +4,15 @@
 
 ## 目录
 
-- [基本介绍](#基本介绍)
-- [流程结构定义](#流程定义结构)
-- [节点关联定义](#)
-  - [异常策略](#异常策略)
-    - [retry](#retry)
-    - [goto](#goto)
-    - [exit](#exit)
+- [Fow Of Code流程编排定义语言 - Version 0.1](#fow-of-code流程编排定义语言---version-01)
+  - [目录](#目录)
+  - [基本介绍](#基本介绍)
+  - [流程结构定义](#流程结构定义)
+  - [节点关联定义](#节点关联定义)
+    - [异常策略](#异常策略)
+      - [retry](#retry)
+      - [goto](#goto)
+      - [exit](#exit)
 
 
 
@@ -48,7 +50,7 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 | 属性名称   | 类型   | 描述                                                         | 是否必填             | 默认值 |
 | ---------- | ------ | ------------------------------------------------------------ | -------------------- | ------ |
 | type       | enum   | 定义异常策略类型。异常策略目前有 3 种：`retry`，`goto`，`exit` | 是                   | `exit` |
-| properties | object | 异常策略参数。可以为[retry](#retry)、[goto](#goto)、[exit](#exit)其中之一 | 除了`exit`类型，其他 |        |
+| properties | object | 异常策略参数。可以为[retry](#retry)、[goto](#goto)、[exit](#exit)其中之一 | 除了`exit`类型，其他必填 |        |
 
 #### retry
 
@@ -56,7 +58,7 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 
 | 属性名称        | 类型 | 描述     | 是否必填 | 默认值 |
 | --------------- | ---- | -------- | -------- | ------ |
-| intervalSeconds | int  | 重试间隔 | 否       | 0      |
+| interval | int  | 重试间隔，单位：毫秒 | 否       | 0      |
 | retryCount      | int  | 重试次数 | 是       | 1      |
 
 #### goto
