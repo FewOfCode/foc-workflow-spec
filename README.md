@@ -30,7 +30,7 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 | id              | string | 流程定义id                                                                            | 是       ||
 | version         | string | 流程定义版本                                                                      | 是       |    |
 | name      | string | 流程定义名称                                     | 是       |    |
-| description   | string | 流程定义描述                                                                             | 否       ||
+| description   | string | 流程定义jie描述                                                                             | 否       ||
 | specVersion | string | 使用的规范版本 | 是 ||
 | start | string | 开始节点 | 是 ||
 | expressionLang | string | 定义表达式语言 | 否       |jq|
