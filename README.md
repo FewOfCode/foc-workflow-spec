@@ -219,8 +219,8 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 
 | 属性名称                            | 类型   | 描述                                         | 是否必填 | 默认值 |
 | ----------------------------------- | ------ | -------------------------------------------- | -------- | ------ |
-| [branches](#condition branch)       | array  | 可选分支                                     | 是       |        |
-| [defaultBranch](#condition branch) | object | 默认分支。若不满足以上分支条件，则走默认分支 | 是       |        |
+| [branches](#condition-branch)       | array  | 可选分支                                     | 是       |        |
+| [defaultBranch](#condition-branch) | object | 默认分支。若不满足以上分支条件，则走默认分支 | 是       |        |
 
 #### condition branch
 
@@ -400,7 +400,7 @@ iterator模式循环节点
 
 | 属性名称                    | 类型   | 描述                                   | 是否必填 | 默认值 |
 | --------------------------- | ------ | -------------------------------------- | -------- | ------ |
-| [branches](#parallel branch) | array  | 并行分支数组。数组中至少含有一个分支。 | 是       |        |
+| [branches](#parallel-branch) | array  | 并行分支数组。数组中至少含有一个分支。 | 是       |        |
 
 #### parallel branch
 
