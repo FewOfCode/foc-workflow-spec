@@ -14,10 +14,13 @@
     - [任务节点](#任务节点)
     - [分支节点](#分支节点)
       - [branch](#branch)
+    - [循环节点](#循环节点)
   - [关联对象属性定义](#关联对象属性定义)
+    - [command](#command)
     - [函数](#函数)
       - [示例一](#示例一)
       - [示例二](#示例二)
+    - [subflow](#subflow)
     - [异常策略](#异常策略)
       - [retry](#retry)
       - [goto](#goto)
@@ -109,9 +112,9 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 
 特有属性
 
-| 属性名称           | 类型  | 描述                               | 是否必填 | 默认值 |
-| ------------------ | ----- | ---------------------------------- | -------- | ------ |
-| [functions](#函数) | array | 要执行的函数列表。至少包含一个函数 | 是       |        |
+| 属性名称                 | 类型  | 描述             | 是否必填 | 默认值 |
+| ------------------------ | ----- | ---------------- | -------- | ------ |
+| [commands](#command) | array | 任务处理操作数组 | 是       |        |
 
 
 
@@ -146,30 +149,59 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 
 
 
-### 容器节点
+### 循环节点
+
+循环容器支持两种方式的循环，一种是`range`，一种是`iterator`.详细属性如下:
+
+基础属性
+
+| 属性名称                   | 类型              | 描述                                                         | 是否必填 | 默认值  |
+| -------------------------- | ----------------- | ------------------------------------------------------------ | -------- | ------- |
+| id                         | string            | 节点的唯一ID                                                 | 是       |         |
+| name                       | string            | 节点名称                                                     | 是       |         |
+| next                       | string            | 下一个节点ID。默认为`end`，表示流程结束                      | 否       | end     |
+| skip                       | boolean 或 string | 是否忽略该节点。当类型为 string 的时候，表示使用表达式计算值。 | 否       | false   |
+| preDelay                   | int 或 string     | 执行前延时，单位：毫秒。当类型为 string 的时候，表示使用表达式计算值。 | 否       | 0       |
+| postDelay                  | int 或 string     | 执行后延时，单位：毫秒。当类型为 string 的时候，表示使用表达式计算值。 | 否       | 0       |
+| [errorStrategy](#异常策略) | object            | 定义异常策略，当节点执行发生异常的时候执行异常策略。         | 否       |         |
+| type                       | enum              | 节点类型。固定值：`foreach`                                  | 否       | foreach |
+| metadata                   | object            | 元数据                                                       | 否       |         |
+
+特有属性
 
 
 
-
+### 并行节点
 
 
 
 ## 关联对象属性定义
 
-关联到节点的结构定义
+关联到节点的属性结构定义
+
+### command
+
+| 属性名称            | 类型              | 描述                                                         | 是否必填                 | 默认值   |
+| ------------------- | ----------------- | ------------------------------------------------------------ | ------------------------ | -------- |
+| type                | enum              | 调用类型。可选值：`function`、`subflow`                      | 是                       | function |
+| skip                | boolean 或 string | 是否忽略该指令。当类型为 string 的时候，表示使用表达式计算值。 |                          |          |
+| continue            | boolean 或 string | 执行完当前指令的时候，是否结束后续指令，并进行下一次循环     |                          |          |
+| break               | boolean 或 string | 执行完当前指令的时候，是否结束当前节点运行                   |                          |          |
+| [function](#函数)   | object            | 要执行的函数列表。至少包含一个函数                           | 当type为`function`时必填 |          |
+| [subflow](#subflow) | object            | 关联的子流程                                                 | 当type为`subflow`时必填  |          |
 
 ### 函数
 
-函数主要用于[任务节点](#任务节点)，通常指的是程序中的函数，即功能执行的语句块。
+函数是一种指令（[command](#command)），通常指的是程序中的函数，即代码执行的语句块。
 
-| 属性名称 | 类型              | 描述                                                         | 是否必填 | 默认值 |
-| -------- | ----------------- | ------------------------------------------------------------ | -------- | ------ |
-| name     | string            | 函数名                                                       | 是       |        |
-| action   | string            | 函数调用定义，如`path/module/numberOp#add`                   | 是       |        |
-| args     | object            | 函数参数列表。参数名称为`string`类型，参数值任何类型，也支持表达式。 | 否       |        |
-| output   | string            | 返回值的流程变量名，若流程不存在此变量会新增，否则修改。不填表示不接收返回值 | 否       |        |
-| async    | boolean           | 是否异步执行                                                 | 否       | false  |
-| skip     | boolean 或 string | 是否忽略该函数的执行。当类型为 string 的时候，表示使用表达式计算值。 | 否       | false  |
+| 属性名称   | 类型              | 描述                                                         | 是否必填 | 默认值 |
+| ---------- | ----------------- | ------------------------------------------------------------ | -------- | ------ |
+| name       | string            | 函数名                                                       | 是       |        |
+| invocation | string            | 函数调用定义，如`path/module/numberOp#add`                   | 是       |        |
+| args       | object            | 函数参数列表。参数名称为`string`类型，参数值任何类型，也支持表达式。 | 否       |        |
+| output     | string            | 返回值的流程变量名，若流程不存在此变量会新增，否则修改。不填表示不接收返回值 | 否       |        |
+| async      | boolean           | 是否异步执行                                                 | 否       | false  |
+| skip       | boolean 或 string | 是否忽略该函数的执行。当类型为 string 的时候，表示使用表达式计算值。 | 否       | false  |
 
 #### 示例一
 
@@ -178,7 +210,7 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 ```json
 {
   "name": "add",
-  "action": "path/module/numberOp#add",
+  "invocation": "path/module/numberOp#add",
   "args": {
     "num1": 1,
     "num2": "${ num2 }"
@@ -196,7 +228,7 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 ```json
 {
   "name": "print",
-  "action": "path/module/Printer#print",
+  "invocation": "path/module/Printer#print",
   "args": {
     "str": "${ str }"
   },
@@ -204,6 +236,8 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
   "skip": false
 }
 ```
+
+### subflow
 
 ### 异常策略
 
