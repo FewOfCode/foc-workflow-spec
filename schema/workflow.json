@@ -1,3 +1,65 @@
 {
-    
+    "$id": "",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Foc Workflow specification - workflow schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "流程定义id",
+            "minLength": 1
+        },
+        "version": {
+            "type": "string",
+            "description": "流程定义版本",
+            "minLength": 1,
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+        },
+        "name": {
+            "type": "string",
+            "description": "流程定义名称",
+            "minLength": 1
+        },
+        "description": {
+            "type": "string",
+            "description": "流程定义描述"
+        },
+        "specVersion": {
+            "type": "string",
+            "description": "使用的规范版本",
+            "minLength": 1
+        },
+        "start": {
+            "type":"string",
+            "description": "开始节点",
+            "minLength": 1
+        },
+        "expressionLang": {
+            "type": "string",
+            "description": "字符串表达式语言",
+            "minLength": 1,
+            "default": "jq"
+        },
+        "variables": {
+            "type": "object",
+            "description": "流程变量"
+        },
+        "nodes": {
+            "type": "array",
+            "description": "流程节点数组",
+            "oneOf": [
+                {
+                    "title": "变量注入节点",
+                    "$ref": "nodes/inject.json#/inject"
+                }
+            ]
+        },
+        "metadata": {
+            "type": "object",
+            "description": "元数据"
+        }
+    },
+    "definitions": {
+
+    }       
 }
