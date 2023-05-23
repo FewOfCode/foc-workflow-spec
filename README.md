@@ -54,7 +54,7 @@ foc-workflow-spec(Fow Of Code Workflow Specification)，流程编排定义语言
 | 属性名称          | 类型   | 描述                                                                                         | 是否必填 | 默认值 |
 | ----------------- | ------ | -------------------------------------------------------------------------------------------- | -------- | ------ |
 | id              | string | 流程定义id                                                                            | 是       ||
-| version         | int | 流程定义版本                                                                      | 是       |    |
+| version         | string | 流程定义版本                                                                      | 是       |    |
 | name      | string | 流程定义名称                                     | 是       |    |
 | description   | string | 流程定义描述                                                                             | 否       ||
 | specVersion | string | 使用的规范版本 | 是 |0.1|
