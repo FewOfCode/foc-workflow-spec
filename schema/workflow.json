@@ -1,5 +1,5 @@
 {
-    "$id": "",
+    "$id": "https://github.com/FewOfCode/foc-workflow-spec/blob/main/schema/workflow.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Foc Workflow specification - workflow schema",
     "type": "object",
